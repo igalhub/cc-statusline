@@ -69,7 +69,7 @@ segments+=("${DIM}${model}${RESET}")
 
 # Context bar
 ctx_color=$(color_for "$ctx_pct")
-segments+=("Ctx ${ctx_color}$(bar "$ctx_pct" 8) ${ctx_pct}%${RESET}")
+segments+=("Context ${ctx_color}$(bar "$ctx_pct" 8) ${ctx_pct}%${RESET}")
 
 if [[ "$has_rate_limits" == "yes" ]]; then
   five_pct=$(jq -r '.rate_limits.five_hour.used_percentage // 0' <<<"$json")
@@ -83,10 +83,10 @@ if [[ "$has_rate_limits" == "yes" ]]; then
   five_color=$(color_for "$five_pct")
   seven_color=$(color_for "$seven_pct")
 
-  five_label="5h ${five_color}${five_pct}%${RESET}"
+  five_label="5h Limit ${five_color}${five_pct}%${RESET}"
   [[ -n "$five_reset" ]] && five_label+="${DIM} (${RESET}$(fmt_reset "$five_reset")${DIM})${RESET}"
 
-  seven_label="7d ${seven_color}${seven_pct}%${RESET}"
+  seven_label="7d Limit ${seven_color}${seven_pct}%${RESET}"
   [[ -n "$seven_reset" ]] && seven_label+="${DIM} (${RESET}$(fmt_reset "$seven_reset")${DIM})${RESET}"
 
   segments+=("$five_label")
