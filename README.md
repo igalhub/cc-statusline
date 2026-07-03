@@ -55,7 +55,7 @@ sound fun — that's not what this repo does.
 ## Test without Claude Code
 
 ```bash
-echo '{"model":{"display_name":"Sonnet 5"},"workspace":{"current_dir":"/home/igalv/some-project"},"context_window":{"used_percentage":28},"rate_limits":{"five_hour":{"used_percentage":62,"resets_at":'$(($(date +%s)+7931))'},"seven_day":{"used_percentage":17,"resets_at":'$(($(date +%s)+259200))'}}}' | ~/.claude/scripts/statusline.sh
+echo '{"model":{"display_name":"Sonnet 5"},"workspace":{"current_dir":"/home/developer/some-project"},"context_window":{"used_percentage":28},"rate_limits":{"five_hour":{"used_percentage":62,"resets_at":'$(($(date +%s)+7931))'},"seven_day":{"used_percentage":17,"resets_at":'$(($(date +%s)+259200))'}}}' | ~/.claude/scripts/statusline.sh
 ```
 
 Expected output (colors won't show in plain text):

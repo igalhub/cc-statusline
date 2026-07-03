@@ -77,7 +77,7 @@ strip_ansi() {
 }
 
 @test "directory name is extracted from workspace.current_dir" {
-  json='{"workspace":{"current_dir":"/home/igalv/claudecode/projects/expiry-watcher"},"context_window":{"used_percentage":5}}'
+  json='{"workspace":{"current_dir":"/home/developer/claudecode/projects/expiry-watcher"},"context_window":{"used_percentage":5}}'
   run bash -c "echo '$json' | $SCRIPT"
   clean=$(strip_ansi "$output")
   [[ "$clean" == *"expiry-watcher"* ]]
