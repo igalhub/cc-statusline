@@ -1,0 +1,22 @@
+name: cc-statusline CI
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck and bats
+        run: sudo apt-get update && sudo apt-get install -y shellcheck bats jq
+
+      - name: Shellcheck
+        run: shellcheck statusline.sh
+
+      - name: Run tests
+        run: bats tests/statusline.bats
