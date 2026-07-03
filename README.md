@@ -49,7 +49,7 @@ echo '{"model":{"display_name":"Sonnet 5"},"workspace":{"current_dir":"/home/iga
 
 Expected output (colors won't show in plain text):
 ```
-some-project │ Sonnet 5 │ Ctx ▓▓░░░░░░ 28% │ 5h 62% (2h12m) │ 7d 17% (72h0m)
+some-project │ Sonnet 5 │ Context ▓▓░░░░░░ 28% │ 5h Limit 62% (2h12m) │ 7d Limit 17% (72h0m)
 ```
 
 ## Reading the output
@@ -60,18 +60,18 @@ Left to right:
 |---|---|
 | `some-project` | Current project directory name (basename of `cwd`) |
 | `Sonnet 5` | Model active in this session |
-| `Ctx ▓▓░░░░░░ 28%` | Context window usage. The bar has 8 segments; filled = used. Color-coded green (<50%) → yellow (50–79%) → red (≥80%) |
-| `5h 62% (2h12m)` | % used of the rolling 5-hour rate-limit window, and time until it resets |
-| `7d 17% (72h0m)` | % used of the rolling 7-day rate-limit window, and time until it resets |
+| `Context ▓▓░░░░░░ 28%` | Context window usage. The bar has 8 segments; filled = used. Color-coded green (<50%) → yellow (50–79%) → red (≥80%) |
+| `5h Limit 62% (2h12m)` | % used of the rolling 5-hour rate-limit window, and time until it resets |
+| `7d Limit 17% (72h0m)` | % used of the rolling 7-day rate-limit window, and time until it resets |
 
 If you're on API-key billing instead of Pro/Max OAuth, the two rate-limit
 segments are replaced by a single `$X.XX session` cost segment instead.
 
 **What to actually do with this:** context and the 5-hour window are the
-two to watch during a long session. If `Ctx` climbs into yellow/red,
+two to watch during a long session. If `Context` climbs into yellow/red,
 consider `/compact` or starting a fresh session rather than letting
 Claude Code auto-compact for you (auto-compact can drop earlier context
-you still needed). If `5h` climbs into red with a short reset time,
+you still needed). If `5h Limit` climbs into red with a short reset time,
 that's the moment to slow down, switch to a lighter model for
 non-critical work, or plan around the reset rather than getting blocked
 mid-task. The 7-day window is usually the least urgent of the three —
