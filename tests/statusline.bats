@@ -29,14 +29,22 @@ strip_ansi() {
   [ -n "$output" ]
 }
 
-@test "rate_limits present renders 5h and 7d segments" {
+@test "rate_limits present renders 5h Limit and 7d Limit segments" {
   now=$(date +%s)
   json="{\"context_window\":{\"used_percentage\":28},\"rate_limits\":{\"five_hour\":{\"used_percentage\":62,\"resets_at\":$((now+7200))},\"seven_day\":{\"used_percentage\":17,\"resets_at\":$((now+259200))}}}"
   run bash -c "echo '$json' | $SCRIPT"
   [ "$status" -eq 0 ]
   clean=$(strip_ansi "$output")
-  [[ "$clean" == *"5h"* ]]
-  [[ "$clean" == *"7d"* ]]
+  [[ "$clean" == *"5h Limit"* ]]
+  [[ "$clean" == *"7d Limit"* ]]
+}
+
+@test "context segment says Context, not Ctx" {
+  run bash -c "echo '{\"context_window\":{\"used_percentage\":28}}' | $SCRIPT"
+  [ "$status" -eq 0 ]
+  clean=$(strip_ansi "$output")
+  [[ "$clean" == *"Context"* ]]
+  [[ "$clean" != *"Ctx "* ]]
 }
 
 @test "missing rate_limits falls back to session cost" {
