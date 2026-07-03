@@ -11,6 +11,17 @@ Pro/Max OAuth login (rate_limits won't be present in that case).
 No game, no marketing nudges, no upstream dependency — plain bash + jq,
 ~110 lines, easy to read and modify.
 
+## Credit
+
+The idea for a Claude Code status line came from [claudino](https://github.com/niztal/claudino)
+by [@niztal](https://github.com/niztal) — a status-line "pet" that munches
+your tokens while Claude thinks, plus a full interactive terminal game.
+cc-statusline is a from-scratch rebuild of just the parts that were
+genuinely useful to my own workflow (the Context/rate-limit gauges), in
+plain bash + jq instead of Node, with no game and no upstream dependency.
+Worth checking out claudino if the game and the token-muncher animation
+sound fun — that's not what this repo does.
+
 ## Install
 
 1. Make sure `jq` is installed:
