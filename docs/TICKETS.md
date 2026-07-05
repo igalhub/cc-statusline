@@ -120,6 +120,30 @@ Confirmed via `gh repo view`: `"visibility":"PUBLIC"`.
 
 ---
 
+## CCS-009 — Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard
+
+**Status:** DONE (PR #5, follow-up fix PR #8)
+
+**Description:**
+First full doc pass for this repo — had README.md and HANDOFF.md but no
+CLAUDE.md and no `docs/` at all. Added `CLAUDE.md` (Claude Code working
+instructions), `docs/PRD.md`/`docs/SPEC.md` (why/how), and this file —
+initially with only CCS-001 and CCS-002 as forward-looking open
+tickets, since nothing else had been ticket-tracked up to that point.
+Follow-up (PR #8) fixed CCS-002's acceptance-criteria checkboxes (left
+unchecked despite `Status: DONE`) and added the "Ticket status" summary
+table that's standard across every other repo in the portfolio. This
+ticket itself was later expanded (this pass) to backfill CCS-003
+through CCS-008 for the work that shipped before this file existed.
+
+**Acceptance criteria:**
+- [x] `CLAUDE.md` added
+- [x] `docs/PRD.md` and `docs/SPEC.md` added
+- [x] `docs/TICKETS.md` added, and later corrected/completed (checkbox
+      fix, status table, historical backfill)
+
+---
+
 ## CCS-001 — `--no-header` flag to replace the fragile sed-based header strip
 
 **Status:** DONE
@@ -173,28 +197,6 @@ kube-sentinel, and vault-secrets-demo by bumping to the current major
 
 ---
 
-## CCS-009 — Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard
-
-**Status:** DONE (PR #5, follow-up fix PR #8)
-
-**Description:**
-First full doc pass for this repo — had README.md and HANDOFF.md but no
-CLAUDE.md and no `docs/` at all. Added `CLAUDE.md` (Claude Code working
-instructions), `docs/PRD.md`/`docs/SPEC.md` (why/how), and this file.
-Follow-up (PR #8) fixed CCS-002's acceptance-criteria checkboxes (left
-unchecked despite `Status: DONE`) and added the "Ticket status" summary
-table that's standard across every other repo in the portfolio. This
-ticket itself was later expanded (this pass) to backfill CCS-003
-through CCS-008 for the work that shipped before this file existed.
-
-**Acceptance criteria:**
-- [x] `CLAUDE.md` added
-- [x] `docs/PRD.md` and `docs/SPEC.md` added
-- [x] `docs/TICKETS.md` added, and later corrected/completed (checkbox
-      fix, status table, historical backfill)
-
----
-
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -205,6 +207,6 @@ through CCS-008 for the work that shipped before this file existed.
 | CCS-006 | Credit claudino as the inspiration | DONE |
 | CCS-007 | Genericize real username in example/test-fixture paths | DONE |
 | CCS-008 | Flip repo Private → Public | DONE |
+| CCS-009 | Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard | DONE |
 | CCS-001 | `--no-header` flag to replace the fragile sed-based header strip | DONE |
 | CCS-002 | Bump `actions/checkout` off v4 | DONE |
-| CCS-009 | Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard | DONE |
