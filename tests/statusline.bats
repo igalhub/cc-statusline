@@ -87,3 +87,13 @@ strip_ansi() {
   run bash -c "echo 'not json' | timeout 5 $SCRIPT"
   [ "$status" -ne 0 ]
 }
+
+@test "--no-header suppresses directory and model segments regardless of label text" {
+  json='{"workspace":{"current_dir":"/home/developer/some-project"},"model":{"display_name":"Sonnet 5"},"context_window":{"used_percentage":28}}'
+  run bash -c "echo '$json' | $SCRIPT --no-header"
+  [ "$status" -eq 0 ]
+  clean=$(strip_ansi "$output")
+  [[ "$clean" != *"some-project"* ]]
+  [[ "$clean" != *"Sonnet 5"* ]]
+  [[ "$clean" == *"Context"* ]]
+}
