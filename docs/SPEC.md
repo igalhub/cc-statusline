@@ -50,12 +50,26 @@ past-due reset timestamp — e.g. clock skew, or the script running just
 after the actual reset — renders as `0m`, never a negative duration).
 Formats as `HhMm` if `h > 0`, else just `Mm`.
 
+## CLI flags
+
+**`--no-header`** — suppresses the directory + model segments entirely;
+only the gauge segments (Context, 5h/7d Limit or session cost) render.
+Parsed from `"$@"` before stdin is read. Intended for a combining
+script that already renders its own dirname/model header and only
+wants cc-statusline's gauges appended — see `~/.claude/statusline-command.sh`
+(a separate, personal script, not part of this repo) for the actual
+usage. Added to replace a fragile `sed`-based header strip that was
+keyed to the literal current segment label string and had already
+broken once for real on a label rename (see `docs/TICKETS.md` CCS-008).
+
 ## Segment assembly
 
 Segments are built into a bash array in a fixed order — directory,
 model, context bar, then either (5h Limit, 7d Limit) or (session cost) —
 and joined with `" │ "`. The directory segment is omitted entirely if
 `dirname` resolves empty (e.g. `current_dir` absent from the input).
+Both the directory and model segments are skipped entirely under
+`--no-header`, regardless of `dirname`.
 
 **Branch point:** `has_rate_limits` is computed once
 (`if .rate_limits then "yes" else "no" end`) and gates which of the two
@@ -74,7 +88,7 @@ both are called out explicitly in the README as the places to edit.
 
 ## Test coverage (`tests/statusline.bats`)
 
-10 tests, each constructing a JSON fixture and asserting on the
+11 tests, each constructing a JSON fixture and asserting on the
 script's actual stdout — not testing internal functions in isolation,
 since the whole script is small enough that end-to-end is the natural
 unit:
@@ -91,6 +105,8 @@ unit:
 - Directory name correctly extracted from `workspace.current_dir`
 - Malformed JSON input fails gracefully — nonzero exit, no hang (not a
   silently-wrong render)
+- `--no-header` suppresses directory and model segments regardless of
+  the current label text, while still rendering the Context segment
 
 ## CI
 

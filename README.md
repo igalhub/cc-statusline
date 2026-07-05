@@ -9,7 +9,7 @@ session cost automatically if you're on API-key billing instead of a
 Pro/Max OAuth login (rate_limits won't be present in that case).
 
 No game, no marketing nudges, no upstream dependency — plain bash + jq,
-~110 lines, easy to read and modify.
+~120 lines, easy to read and modify.
 
 ## Credit
 
@@ -100,6 +100,11 @@ mostly worth a glance rather than active management.
   in the script if you want different cutoffs.
 - Bar width is 8 characters; change the `8` in the `bar "$ctx_pct" 8` call
   if you want it wider/narrower.
+- Already have a status line and just want the gauges appended to it?
+  Run `statusline.sh --no-header` to suppress the directory and model
+  segments and get only the Context/rate-limit (or cost) segments —
+  pipe the same stdin JSON to it from your own script and append the
+  output.
 - Tested edge cases: 0%, 100%, empty JSON (fresh session), past-due reset
   timestamps, missing `rate_limits` key entirely.
 
