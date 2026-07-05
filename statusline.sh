@@ -6,6 +6,13 @@
 
 set -euo pipefail
 
+no_header=0
+for arg in "$@"; do
+  case "$arg" in
+    --no-header) no_header=1 ;;
+  esac
+done
+
 json="$(cat)"
 
 # --- colors -----------------------------------------------------------
@@ -63,9 +70,12 @@ has_rate_limits=$(jq -r 'if .rate_limits then "yes" else "no" end' <<<"$json")
 
 segments=()
 
-# Directory + model
-[[ -n "$dirname" ]] && segments+=("${DIM}${dirname}${RESET}")
-segments+=("${DIM}${model}${RESET}")
+# Directory + model (suppressed with --no-header, e.g. when a combining
+# script already renders its own dirname/model and only wants the gauges)
+if [[ "$no_header" -eq 0 ]]; then
+  [[ -n "$dirname" ]] && segments+=("${DIM}${dirname}${RESET}")
+  segments+=("${DIM}${model}${RESET}")
+fi
 
 # Context bar
 ctx_color=$(color_for "$ctx_pct")

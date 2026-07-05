@@ -9,7 +9,7 @@ identity/content audit, the private→public flip).
 
 ## CCS-001 — `--no-header` flag to replace the fragile sed-based header strip
 
-**Status:** OPEN
+**Status:** DONE
 
 **Description:**
 `~/.claude/statusline-command.sh` (a separate, personal script, not
@@ -26,14 +26,14 @@ with no error surfaced — just a visibly wrong (but not crashing)
 status line.
 
 **Acceptance criteria:**
-- [ ] Add a `--no-header` (or similarly named) flag to `statusline.sh`
+- [x] Add a `--no-header` (or similarly named) flag to `statusline.sh`
       that suppresses the directory + model segments entirely, so a
       combining script can request "just the gauges" structurally
       instead of stripping them out after the fact with a
       label-dependent regex
-- [ ] Update `~/.claude/statusline-command.sh` (outside this repo) to
+- [x] Update `~/.claude/statusline-command.sh` (outside this repo) to
       use the new flag instead of the sed strip
-- [ ] Add a bats test confirming `--no-header` output has no
+- [x] Add a bats test confirming `--no-header` output has no
       directory/model segment, regardless of what the first gauge
       segment's label currently is
 
