@@ -53,7 +53,16 @@ kube-sentinel, and vault-secrets-demo by bumping to the current major
 (`v7` as of this writing).
 
 **Acceptance criteria:**
-- [ ] `actions/checkout@v4` → `v7` (or whatever the current major is at
+- [x] `actions/checkout@v4` → `v7` (or whatever the current major is at
       the time this is picked up) in `.github/workflows/ci.yml`
-- [ ] Confirm the Node 20 deprecation annotation no longer appears on
+- [x] Confirm the Node 20 deprecation annotation no longer appears on
       the next CI run
+
+---
+
+## Ticket status
+
+| Ticket | Title | Status |
+|---|---|---|
+| CCS-001 | `--no-header` flag to replace the fragile sed-based header strip | DONE |
+| CCS-002 | Bump `actions/checkout` off v4 | DONE |
