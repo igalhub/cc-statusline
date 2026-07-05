@@ -41,7 +41,7 @@ status line.
 
 ## CCS-002 — Bump `actions/checkout` off v4
 
-**Status:** OPEN
+**Status:** DONE
 
 **Description:**
 `.github/workflows/ci.yml` uses `actions/checkout@v4`. `HANDOFF.md`
