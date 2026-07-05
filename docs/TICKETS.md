@@ -1,16 +1,20 @@
 # TICKETS — cc-statusline
 
-Full ticket history for this repo, backfilled from git/PR history since
-`docs/TICKETS.md` didn't exist until CCS-009. Numbers aren't strictly
-chronological — CCS-001/CCS-002 were assigned first (before this
-backfill) and are already referenced in merged commit messages and PR
-titles, so they keep their numbers rather than being renumbered.
-`HANDOFF.md` still has the fuller session-by-session narrative; this is
-the ticket-level summary.
+Full ticket history for this repo, backfilled from git/PR history and
+renumbered into strict chronological order (ticket IDs now match the
+order work actually shipped in, start to finish). One consequence:
+two already-merged commit messages reference the *old* numbers from
+before this renumber — `feat: add --no-header flag (CCS-001)` and
+`ci: bump actions/checkout to v7 (CCS-002)` — those are what's now
+CCS-008 and CCS-009 below. Commit history can't be rewritten after the
+fact, so this file is the source of truth for current numbering; those
+two commit messages are a known historical mismatch, not an error to
+fix. `HANDOFF.md` still has the fuller session-by-session narrative;
+this is the ticket-level summary.
 
 ---
 
-## CCS-003 — Initial script, tests, and CI
+## CCS-001 — Initial script, tests, and CI
 
 **Status:** DONE
 
@@ -32,7 +36,7 @@ covered by a named regression test.
 
 ---
 
-## CCS-004 — README "Reading the output" section
+## CCS-002 — README "Reading the output" section
 
 **Status:** DONE (PR #1)
 
@@ -48,7 +52,7 @@ on what to do when Context or the 5h window climbs into yellow/red.
 
 ---
 
-## CCS-005 — Descriptive segment labels
+## CCS-003 — Descriptive segment labels
 
 **Status:** DONE (PR #2)
 
@@ -58,10 +62,10 @@ Renamed abbreviated segment labels to full words: `Ctx` → `Context`,
 full new labels rather than incidental substrings, plus a new explicit
 test that the context segment says `"Context"` and not `"Ctx "`.
 
-This change is also what exposed the bug backfilled as CCS-001: the
-personal `~/.claude/statusline-command.sh` combiner script's
-label-dependent sed strip broke silently the moment this rename
-shipped, since it was keyed to the literal string `"Ctx"`.
+This change is also what exposed the bug fixed by CCS-008: the personal
+`~/.claude/statusline-command.sh` combiner script's label-dependent sed
+strip broke silently the moment this rename shipped, since it was keyed
+to the literal string `"Ctx"`.
 
 **Acceptance criteria:**
 - [x] All three segment labels renamed to full words
@@ -71,7 +75,7 @@ shipped, since it was keyed to the literal string `"Ctx"`.
 
 ---
 
-## CCS-006 — Credit claudino as the inspiration
+## CCS-004 — Credit claudino as the inspiration
 
 **Status:** DONE (PR #3)
 
@@ -89,7 +93,7 @@ from-scratch bash+jq rebuild of just the Context/rate-limit gauges
 
 ---
 
-## CCS-007 — Genericize real username in example/test-fixture paths
+## CCS-005 — Genericize real username in example/test-fixture paths
 
 **Status:** DONE (PR #4)
 
@@ -105,22 +109,22 @@ and all bats tests re-verified passing after the change.
 
 ---
 
-## CCS-008 — Flip repo Private → Public
+## CCS-006 — Flip repo Private → Public
 
 **Status:** DONE
 
 **Description:**
-Repo started private on GitHub; flipped to public after CCS-007 landed
+Repo started private on GitHub; flipped to public after CCS-005 landed
 (so no real-username content was ever exposed publicly, even briefly).
 Confirmed via `gh repo view`: `"visibility":"PUBLIC"`.
 
 **Acceptance criteria:**
-- [x] Content audit (CCS-007) completed before flipping visibility
+- [x] Content audit (CCS-005) completed before flipping visibility
 - [x] Visibility change confirmed via `gh repo view`, not assumed
 
 ---
 
-## CCS-009 — Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard
+## CCS-007 — Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard
 
 **Status:** DONE (PR #5, follow-up fix PR #8)
 
@@ -128,23 +132,23 @@ Confirmed via `gh repo view`: `"visibility":"PUBLIC"`.
 First full doc pass for this repo — had README.md and HANDOFF.md but no
 CLAUDE.md and no `docs/` at all. Added `CLAUDE.md` (Claude Code working
 instructions), `docs/PRD.md`/`docs/SPEC.md` (why/how), and this file —
-initially with only CCS-001 and CCS-002 as forward-looking open
-tickets, since nothing else had been ticket-tracked up to that point.
-Follow-up (PR #8) fixed CCS-002's acceptance-criteria checkboxes (left
-unchecked despite `Status: DONE`) and added the "Ticket status" summary
-table that's standard across every other repo in the portfolio. This
-ticket itself was later expanded (this pass) to backfill CCS-003
-through CCS-008 for the work that shipped before this file existed.
+initially with only two forward-looking open tickets (now CCS-008 and
+CCS-009 below), since nothing else had been ticket-tracked up to that
+point. Follow-up (PR #8) fixed CCS-009's acceptance-criteria checkboxes
+(left unchecked despite `Status: DONE`) and added the "Ticket status"
+summary table that's standard across every other repo in the portfolio.
+This ticket itself was later expanded and the whole file renumbered
+into strict chronological order (this pass).
 
 **Acceptance criteria:**
 - [x] `CLAUDE.md` added
 - [x] `docs/PRD.md` and `docs/SPEC.md` added
 - [x] `docs/TICKETS.md` added, and later corrected/completed (checkbox
-      fix, status table, historical backfill)
+      fix, status table, historical backfill, chronological renumber)
 
 ---
 
-## CCS-001 — `--no-header` flag to replace the fragile sed-based header strip
+## CCS-008 — `--no-header` flag to replace the fragile sed-based header strip
 
 **Status:** DONE
 
@@ -155,7 +159,7 @@ part of this repo) combines its own dirname/model header with
 `cc-statusline`'s current first-segment label string (currently
 `"Context"`) to strip the duplicate header before appending. This has
 already broken once for real: when the segment label was renamed from
-`"Ctx"` to `"Context"` (CCS-005), the old `sed 's/^.*Ctx/Ctx/'` pattern
+`"Ctx"` to `"Context"` (CCS-003), the old `sed 's/^.*Ctx/Ctx/'` pattern
 silently stopped matching and the combined status line started showing
 a duplicated dirname/model header until caught and fixed. The same
 class of breakage will recur on any future label/format change, with
@@ -176,7 +180,7 @@ line.
 
 ---
 
-## CCS-002 — Bump `actions/checkout` off v4
+## CCS-009 — Bump `actions/checkout` off v4
 
 **Status:** DONE
 
@@ -201,12 +205,12 @@ kube-sentinel, and vault-secrets-demo by bumping to the current major
 
 | Ticket | Title | Status |
 |---|---|---|
-| CCS-003 | Initial script, tests, and CI | DONE |
-| CCS-004 | README "Reading the output" section | DONE |
-| CCS-005 | Descriptive segment labels | DONE |
-| CCS-006 | Credit claudino as the inspiration | DONE |
-| CCS-007 | Genericize real username in example/test-fixture paths | DONE |
-| CCS-008 | Flip repo Private → Public | DONE |
-| CCS-009 | Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard | DONE |
-| CCS-001 | `--no-header` flag to replace the fragile sed-based header strip | DONE |
-| CCS-002 | Bump `actions/checkout` off v4 | DONE |
+| CCS-001 | Initial script, tests, and CI | DONE |
+| CCS-002 | README "Reading the output" section | DONE |
+| CCS-003 | Descriptive segment labels | DONE |
+| CCS-004 | Credit claudino as the inspiration | DONE |
+| CCS-005 | Genericize real username in example/test-fixture paths | DONE |
+| CCS-006 | Flip repo Private → Public | DONE |
+| CCS-007 | Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard | DONE |
+| CCS-008 | `--no-header` flag to replace the fragile sed-based header strip | DONE |
+| CCS-009 | Bump `actions/checkout` off v4 | DONE |
