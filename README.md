@@ -22,6 +22,26 @@ plain bash + jq instead of Node, with no game and no upstream dependency.
 Worth checking out claudino if the game and the token-muncher animation
 sound fun — that's not what this repo does.
 
+## Related projects
+
+If you want something different from what's here, two other options exist
+for the same "watch context/rate-limit usage in your status line" itch:
+
+- **[Anthropic's own statusline docs](https://code.claude.com/docs/en/statusline)**
+  — the official JSON contract plus ready-to-adapt example snippets (context
+  bar, rate limits, cost tracking, git status) in bash/Python/JS. A starting
+  point to build your own from scratch, not a finished script — no color
+  thresholds, edge-case clamping, or combining flag out of the box.
+- **cc-statusline (this repo)** — the finished, no-frills version: just the
+  Context/rate-limit gauges, dependency-light (`jq` only, no Node/npm),
+  tested, ready to `cp` into place.
+- **[claudino](https://github.com/niztal/claudino)** — the playful version
+  this project was inspired by: an animated block-art creature that munches
+  your tokens in the status line, plus a full separate `/play` Dino-style
+  game. Node-based (`npx` install); the game's side-pane auto-launch works
+  smoothest on macOS or tmux, with a manual fallback elsewhere. Worth it if
+  you want something fun to look at, not just functional.
+
 ## Install
 
 1. Make sure `jq` is installed:

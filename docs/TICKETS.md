@@ -316,6 +316,35 @@ idle." `README.md`'s Notes section said nothing about this.
 
 ---
 
+## CCS-013 — "Related projects" README section
+
+**Status:** DONE
+
+**Description:**
+Adds a `## Related projects` section to `README.md` right after
+`## Credit`, helping a reader self-select between three options for
+watching context/rate-limit usage in a Claude Code status line:
+Anthropic's own official statusline docs (a DIY starting point — JSON
+contract + example snippets, no color thresholds/clamping/combining
+flag out of the box), this repo (the finished, dependency-light bash+jq
+version), and claudino (the Node-based, playful project this repo's own
+Credit section already credits as its inspiration). Both external
+claims verified live before writing: Anthropic's docs page fetched
+directly, and claudino's own README "Notes & limits" section fetched
+directly to confirm its side-pane auto-launch works smoothest on
+macOS/tmux with a manual fallback elsewhere (not a macOS-only
+limitation — the real practical difference is the Node/npm dependency).
+
+**Acceptance criteria:**
+- [x] `## Related projects` section added immediately after `## Credit`
+- [x] Both external links render correctly
+- [x] No code changes — `statusline.sh`/tests untouched, shellcheck/bats
+      still pass
+- [x] Tone matches the rest of the README — matter-of-fact, fair to
+      claudino
+
+---
+
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -332,3 +361,4 @@ idle." `README.md`'s Notes section said nothing about this.
 | CCS-010 | Clamp displayed percentage to [0, 100] | DONE |
 | CCS-011 | Scrub real username from git history | DONE |
 | CCS-012 | Document the event-driven refresh model in README | DONE |
+| CCS-013 | "Related projects" README section | DONE |
