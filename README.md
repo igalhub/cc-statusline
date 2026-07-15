@@ -9,7 +9,7 @@ session cost automatically if you're on API-key billing instead of a
 Pro/Max OAuth login (rate_limits won't be present in that case).
 
 No game, no marketing nudges, no upstream dependency — plain bash + jq,
-~120 lines, easy to read and modify.
+~135 lines, easy to read and modify.
 
 ## Credit
 
