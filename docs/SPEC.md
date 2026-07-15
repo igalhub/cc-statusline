@@ -93,7 +93,7 @@ both are called out explicitly in the README as the places to edit.
 
 ## Test coverage (`tests/statusline.bats`)
 
-11 tests, each constructing a JSON fixture and asserting on the
+15 tests, each constructing a JSON fixture and asserting on the
 script's actual stdout — not testing internal functions in isolation,
 since the whole script is small enough that end-to-end is the natural
 unit:
@@ -112,6 +112,9 @@ unit:
   silently-wrong render)
 - `--no-header` suppresses directory and model segments regardless of
   the current label text, while still rendering the Context segment
+- Over-100 and negative `used_percentage` clamp the displayed label to
+  `100%`/`0%` respectively, for both Context and the rate-limit
+  segments
 
 ## CI
 
