@@ -201,6 +201,29 @@ kube-sentinel, and vault-secrets-demo by bumping to the current major
 
 ---
 
+## CCS-010 — Clamp displayed percentage to [0, 100]
+
+**Status:** DONE
+
+**Description:**
+`bar()` correctly clamps its rendered width to `[0, width]` when
+`used_percentage` is out of range, but the numeric label printed next
+to the bar was only truncated to an integer, never range-clamped —
+`used_percentage: 134.7` rendered a fully-filled bar next to a `134%`
+label; `-5` rendered an empty bar next to a `-5%` label. Hit all three
+percentage segments (Context, 5h Limit, 7d Limit), not just Context.
+
+**Acceptance criteria:**
+- [x] `ctx_pct`, `five_pct`, `seven_pct` clamped to `[0, 100]` via a new
+      `clamp_pct()` helper, applied immediately after integer
+      truncation, before `color_for()` or the printed label
+- [x] `bar()`'s existing internal width guard left as-is
+- [x] 4 new bats tests added (over-100/negative for Context and for
+      rate-limit segments); all 11 existing tests pass unmodified
+- [x] `docs/SPEC.md` updated to document the clamp
+
+---
+
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -214,3 +237,4 @@ kube-sentinel, and vault-secrets-demo by bumping to the current major
 | CCS-007 | Add CLAUDE.md and the docs/PRD.md + docs/SPEC.md + docs/TICKETS.md standard | DONE |
 | CCS-008 | `--no-header` flag to replace the fragile sed-based header strip | DONE |
 | CCS-009 | Bump `actions/checkout` off v4 | DONE |
+| CCS-010 | Clamp displayed percentage to [0, 100] | DONE |
