@@ -28,7 +28,12 @@ degraded one.
 
 Every percentage is truncated to an integer with bash's `${var%.*}`
 (string suffix strip on the fractional part), not rounded — `28.7%`
-displays as `28%`.
+displays as `28%`. It is then clamped to `[0, 100]` via `clamp_pct()`
+(same reasoning as `bar()`'s width clamp below: upstream can send a
+`used_percentage` slightly over 100 or negative, and the displayed
+label shouldn't visually contradict the bar it sits next to) — `134.7%`
+displays as `100%`, `-5%` displays as `0%`. This clamp applies to all
+three percentages (Context, 5h Limit, 7d Limit).
 
 ## Rendering
 

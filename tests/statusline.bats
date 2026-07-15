@@ -97,3 +97,39 @@ strip_ansi() {
   [[ "$clean" != *"Sonnet 5"* ]]
   [[ "$clean" == *"Context"* ]]
 }
+
+@test "over-100 context clamps displayed percentage to 100" {
+  run bash -c "echo '{\"context_window\":{\"used_percentage\":134.7}}' | $SCRIPT"
+  [ "$status" -eq 0 ]
+  clean=$(strip_ansi "$output")
+  [[ "$clean" == *"100%"* ]]
+  [[ "$clean" != *"134%"* ]]
+}
+
+@test "negative context clamps displayed percentage to 0" {
+  run bash -c "echo '{\"context_window\":{\"used_percentage\":-5}}' | $SCRIPT"
+  [ "$status" -eq 0 ]
+  clean=$(strip_ansi "$output")
+  [[ "$clean" == *"0%"* ]]
+  [[ "$clean" != *"-5%"* ]]
+}
+
+@test "over-100 five_hour rate limit clamps displayed percentage to 100" {
+  now=$(date +%s)
+  json="{\"context_window\":{\"used_percentage\":10},\"rate_limits\":{\"five_hour\":{\"used_percentage\":150,\"resets_at\":$((now+7200))},\"seven_day\":{\"used_percentage\":5,\"resets_at\":$((now+259200))}}}"
+  run bash -c "echo '$json' | $SCRIPT"
+  [ "$status" -eq 0 ]
+  clean=$(strip_ansi "$output")
+  [[ "$clean" == *"5h Limit"*"100%"* ]]
+  [[ "$clean" != *"150%"* ]]
+}
+
+@test "negative seven_day rate limit clamps displayed percentage to 0" {
+  now=$(date +%s)
+  json="{\"context_window\":{\"used_percentage\":10},\"rate_limits\":{\"five_hour\":{\"used_percentage\":20,\"resets_at\":$((now+7200))},\"seven_day\":{\"used_percentage\":-5,\"resets_at\":$((now+259200))}}}"
+  run bash -c "echo '$json' | $SCRIPT"
+  [ "$status" -eq 0 ]
+  clean=$(strip_ansi "$output")
+  [[ "$clean" == *"7d Limit"*"0%"* ]]
+  [[ "$clean" != *"-5%"* ]]
+}
