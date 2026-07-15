@@ -107,6 +107,14 @@ mostly worth a glance rather than active management.
   output.
 - Tested edge cases: 0%, 100%, empty JSON (fresh session), past-due reset
   timestamps, missing `rate_limits` key entirely.
+- The gauges reflect state as of the last assistant message, not
+  continuously — the script only re-runs on specific triggers (new
+  assistant message, `/compact`, permission-mode change, vim toggle), so
+  it can lag behind Claude Code's own live rate-limit tracking during long
+  tool-call chains or while waiting on a permission prompt. If that
+  matters to you, add `"refreshInterval": <seconds>` to the `statusLine`
+  block in `~/.claude/settings.json` to also re-run the script on a fixed
+  timer.
 
 ## Uninstall
 

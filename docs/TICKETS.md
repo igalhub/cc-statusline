@@ -292,6 +292,30 @@ request (same path used for actual secret leaks).
 
 ---
 
+## CCS-012 — Document the event-driven refresh model in README
+
+**Status:** DONE
+
+**Description:**
+Live-testing surfaced a real discrepancy: the installed statusline's `5h
+Limit` gauge showed 86% while Claude Code's own native session-limit
+banner showed 93%, mid-turn during a long tool-call chain. Not a bug in
+`statusline.sh` — confirmed against Anthropic's own docs
+(https://code.claude.com/docs/en/statusline) that the statusline script
+only re-runs on specific triggers (new assistant message, `/compact`,
+permission-mode change, vim toggle), not continuously during an in-flight
+turn, and that these triggers "can go quiet when the main session is
+idle." `README.md`'s Notes section said nothing about this.
+
+**Acceptance criteria:**
+- [x] `README.md`'s Notes section documents the event-driven refresh
+      model and the `refreshInterval` option, matching the existing
+      bullet style
+- [x] No code changes — docs-only
+- [x] shellcheck/bats still pass
+
+---
+
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -307,3 +331,4 @@ request (same path used for actual secret leaks).
 | CCS-009 | Bump `actions/checkout` off v4 | DONE |
 | CCS-010 | Clamp displayed percentage to [0, 100] | DONE |
 | CCS-011 | Scrub real username from git history | DONE |
+| CCS-012 | Document the event-driven refresh model in README | DONE |
