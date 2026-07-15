@@ -31,6 +31,17 @@ color_for() {
   fi
 }
 
+clamp_pct() {
+  # $1 = integer percentage -> clamped to [0, 100]. Upstream can send
+  # slightly-off values (e.g. 134.7 or -5); the displayed label shouldn't
+  # visually contradict the bar, which is already clamped for rendering.
+  local pct="$1"
+  if   (( pct > 100 )); then echo 100
+  elif (( pct < 0 ));   then echo 0
+  else                       echo "$pct"
+  fi
+}
+
 bar() {
   # $1 = percentage, $2 = width in chars
   local pct="$1" width="${2:-10}"
@@ -65,6 +76,7 @@ dirname=$(basename -- "$cwd" 2>/dev/null || echo "")
 
 ctx_pct=$(jq -r '.context_window.used_percentage // 0' <<<"$json")
 ctx_pct=${ctx_pct%.*}   # integer truncate
+ctx_pct=$(clamp_pct "$ctx_pct")
 
 has_rate_limits=$(jq -r 'if .rate_limits then "yes" else "no" end' <<<"$json")
 
@@ -84,10 +96,12 @@ segments+=("Context ${ctx_color}$(bar "$ctx_pct" 8) ${ctx_pct}%${RESET}")
 if [[ "$has_rate_limits" == "yes" ]]; then
   five_pct=$(jq -r '.rate_limits.five_hour.used_percentage // 0' <<<"$json")
   five_pct=${five_pct%.*}
+  five_pct=$(clamp_pct "$five_pct")
   five_reset=$(jq -r '.rate_limits.five_hour.resets_at // empty' <<<"$json")
 
   seven_pct=$(jq -r '.rate_limits.seven_day.used_percentage // 0' <<<"$json")
   seven_pct=${seven_pct%.*}
+  seven_pct=$(clamp_pct "$seven_pct")
   seven_reset=$(jq -r '.rate_limits.seven_day.resets_at // empty' <<<"$json")
 
   five_color=$(color_for "$five_pct")
