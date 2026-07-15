@@ -224,6 +224,74 @@ percentage segments (Context, 5h Limit, 7d Limit), not just Context.
 
 ---
 
+## CCS-011 — Scrub real username from git history
+
+**Status:** DONE
+
+**Description:**
+CCS-005 genericized the real Linux username `igalv` to `developer` in
+the *working tree* (`README.md`'s example command, `tests/
+statusline.bats`' fixture data) before CCS-006 flipped the repo
+Private → Public, but never rewrote git *history* — unlike the author/
+committer email, which was rewritten across all commits via
+`git filter-repo --mailmap` in an earlier session. Verified live and
+independently before starting: fetching commit `b3c475e`'s patch from
+GitHub anonymously returned the real diff with `igalv` on the pre-fix
+lines — i.e. the username was sitting in plain view in this repo's
+public history.
+
+**What was done:**
+- Full local backup (`git clone --mirror`) taken before any rewrite.
+- `git filter-repo --replace-text --replace-message` (both, since
+  `igalv` appeared in one commit's *message* — CCS-005's own commit,
+  describing the fix — as well as in blob content) run in an isolated
+  scratch clone, not the live working directory.
+- Force-pushed the rewritten history to `origin/master`, then
+  re-verified from a completely fresh `git clone` of the GitHub
+  remote: 0 occurrences of `igalv` anywhere in history, shellcheck
+  clean, all 15 bats tests pass.
+- Confirmed repo visibility still `PUBLIC` after the rewrite.
+- Local working directory hard-reset to match the rewritten
+  `origin/master`.
+
+**Acceptance criteria:**
+- [x] Local backup taken before any destructive operation
+- [x] `git filter-repo` used to replace `igalv` → `developer` across
+      all blob content **and** commit messages (message rewrite was
+      an addition beyond the original brief, needed once the fix
+      commit's own message was found to contain the string)
+- [x] Explicit go/no-go obtained before the force-push step
+- [x] Fresh-clone re-verification (not local state): 0 occurrences
+- [x] Repo visibility re-confirmed `PUBLIC` post-rewrite
+
+**Known side effect (surfaced during execution, not in original brief):**
+The rewrite dropped the commit count from 30 to 28. `git-filter-repo`
+prunes commits that become empty by default — once every historical
+blob containing `igalv` was rewritten to `developer`, the CCS-005 fix
+commit's diff (which changed exactly that string in exactly those two
+files) became identical before/after, so that commit and its PR merge
+commit were pruned as no-ops. This is a faithful, expected consequence
+of the rewrite, not data loss — the substantive change those commits
+made no longer has meaning once the string is scrubbed everywhere.
+Confirmed explicitly with the user before proceeding rather than
+treating the count change as silently acceptable.
+
+**Known residual gap (not fully closed by this ticket):**
+A live check after the force-push showed GitHub still serves the
+pre-rewrite content of commit `b3c475e` via its direct-SHA patch URL
+(`https://github.com/igalhub/cc-statusline/commit/b3c475e....patch`),
+even though a fresh `git clone` correctly shows 0 occurrences. This is
+documented GitHub behavior: force-pushing only moves the branch ref,
+it does not immediately purge now-unreachable objects from GitHub's
+servers — that happens on GitHub's own internal garbage-collection
+schedule, which is not user-triggerable and has no committed SLA.
+Accepted as-is given this is a low-sensitivity Linux username, not a
+credential — re-check the same URL later if confirmation of full
+purge is wanted; if it needs to happen sooner, file a GitHub Support
+request (same path used for actual secret leaks).
+
+---
+
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -238,3 +306,4 @@ percentage segments (Context, 5h Limit, 7d Limit), not just Context.
 | CCS-008 | `--no-header` flag to replace the fragile sed-based header strip | DONE |
 | CCS-009 | Bump `actions/checkout` off v4 | DONE |
 | CCS-010 | Clamp displayed percentage to [0, 100] | DONE |
+| CCS-011 | Scrub real username from git history | DONE |
