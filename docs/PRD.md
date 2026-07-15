@@ -18,7 +18,7 @@ by a rate limit with no warning it was coming.
   isn't available (API-key billing instead of Pro/Max OAuth)
 - Stay dependency-light — `jq` only, no Node/Python runtime, no
   package manager, no build step
-- Be trivially readable and editable — a single ~120-line script, not
+- Be trivially readable and editable — a single ~135-line script, not
   a framework
 
 ## Non-goals

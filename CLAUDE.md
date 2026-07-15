@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A ~120-line bash + `jq` status line script for Claude Code — reads the
+A ~135-line bash + `jq` status line script for Claude Code — reads the
 status JSON Claude Code pipes to it on stdin and prints one line: project
 directory, model, a context-usage bar, and 5-hour/7-day rate-limit bars
 (or a session-cost fallback on API-key billing). See `docs/PRD.md` for
