@@ -11,6 +11,8 @@ Pro/Max OAuth login (rate_limits won't be present in that case).
 No game, no marketing nudges, no upstream dependency — plain bash + jq,
 ~135 lines, easy to read and modify.
 
+![cc-statusline screenshot](docs/images/screenshot.png)
+
 ## Credit
 
 The idea for a Claude Code status line came from [claudino](https://github.com/niztal/claudino)
