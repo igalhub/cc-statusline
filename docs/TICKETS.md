@@ -364,6 +364,26 @@ sync. Added the clamping case to README to match SPEC.
 
 ---
 
+## CCS-015 — Add status line screenshot to README
+
+**Status:** DONE (PR #21)
+
+**Description:**
+`README.md` described the rendered status line in prose (segment
+labels, color thresholds, reset countdowns) but never showed it. Added
+a real screenshot (`docs/images/screenshot.png`) right after the intro
+paragraph, before `## Credit`. Verified before committing that the
+image already used the generic `developer@workstation` fixture path
+(matching CCS-005's genericization), not a real username/host.
+
+**Acceptance criteria:**
+- [x] Screenshot added to README immediately after the intro paragraph
+- [x] Image confirmed free of real username/host before committing
+- [x] No code changes — docs-only
+- [x] shellcheck/bats still pass
+
+---
+
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -382,3 +402,4 @@ sync. Added the clamping case to README to match SPEC.
 | CCS-012 | Document the event-driven refresh model in README | DONE |
 | CCS-013 | "Related projects" README section | DONE |
 | CCS-014 | Document percentage clamping in README's tested-edge-cases bullet | DONE |
+| CCS-015 | Add status line screenshot to README | DONE |
