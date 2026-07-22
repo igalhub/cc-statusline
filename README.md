@@ -125,8 +125,9 @@ mostly worth a glance rather than active management.
   segments and get only the Context/rate-limit (or cost) segments —
   pipe the same stdin JSON to it from your own script and append the
   output.
-- Tested edge cases: 0%, 100%, empty JSON (fresh session), past-due reset
-  timestamps, missing `rate_limits` key entirely.
+- Tested edge cases: 0%, 100%, over-100/negative percentages (clamped to
+  100%/0% on the label, matching the bar), empty JSON (fresh session),
+  past-due reset timestamps, missing `rate_limits` key entirely.
 - The gauges reflect state as of the last assistant message, not
   continuously — the script only re-runs on specific triggers (new
   assistant message, `/compact`, permission-mode change, vim toggle), so
