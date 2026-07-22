@@ -345,6 +345,25 @@ limitation — the real practical difference is the Node/npm dependency).
 
 ---
 
+## CCS-014 — Document percentage clamping in README's tested-edge-cases bullet
+
+**Status:** DONE (PR #19)
+
+**Description:**
+`docs/SPEC.md` already documented CCS-010's over-100/negative
+percentage clamping, but README's "Tested edge cases" bullet under
+Notes still only listed 0%, 100%, empty JSON, past-due reset
+timestamps, and missing `rate_limits` — the two docs had drifted out of
+sync. Added the clamping case to README to match SPEC.
+
+**Acceptance criteria:**
+- [x] README's "Tested edge cases" bullet mentions over-100/negative
+      percentage clamping (CCS-010), matching `docs/SPEC.md`
+- [x] No code changes — docs-only
+- [x] shellcheck/bats still pass
+
+---
+
 ## Ticket status
 
 | Ticket | Title | Status |
@@ -362,3 +381,4 @@ limitation — the real practical difference is the Node/npm dependency).
 | CCS-011 | Scrub real username from git history | DONE |
 | CCS-012 | Document the event-driven refresh model in README | DONE |
 | CCS-013 | "Related projects" README section | DONE |
+| CCS-014 | Document percentage clamping in README's tested-edge-cases bullet | DONE |
